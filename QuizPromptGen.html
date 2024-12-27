@@ -1,14 +1,18 @@
-<html>
-<body>
-    <form action="" method="get">
-        <table align="center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
+<body>
+    <h1>Quiz Prompt Generator</h1>
+    <hr>
+
+    <form action="" method="get">
+        <table align="center"> 
             <tr>
-                <h1>Form to Text Prompt Generator :)</h1>
-                <hr>
-            </tr>
-            
-            <tr> 
                 <td>Topic/s:</td>
                 <td>
                     <input type="text" name="topic" id="">
@@ -23,7 +27,10 @@
             </tr>
         
             <tr>
-                <td>Difficulty:</td>
+                <td>
+                    <label for="difficulty">Difficulty:</label>
+                    
+                </td>
                 <td>
                     <select name="difficulty" id="">
                         <option value="1">Easy</option>
@@ -34,13 +41,9 @@
                 </td>
             </tr>
 
-            <tr> 
-                <td>Number of Items:</td>
-                <td>
-                    <input type="text" name="items" id="">
-                </td>
+            <tr>
+                <td>Number of Items:</td><td><input type="text" name="items" id=""></td>
             </tr>
-        
 
             <tr>
                 
@@ -70,25 +73,24 @@
                 </td>
 
             </tr>
+            <br>
+
         </table>
     </form>
 
-    <br>
-    <tr>
-        <td>File Attachment:</td>
-        <input type="file" name="file" id="">
-    </tr>
+    <table align="center">
+        <hr>
+        <tr>
+            <td><em>OUTPUT</em></td>
+        </tr>
+    </table>
 
 
-    <tr>
-        <br>
-        <br>
-        <td><input type="button" value="Submit"></td>
-    </tr>
-
+        
+    
 </body>
 </html>
 
-
-
-
+<script>
+    
+</script>

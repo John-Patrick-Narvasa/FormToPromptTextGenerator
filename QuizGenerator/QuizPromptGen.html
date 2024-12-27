@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz/Exercise Prompt Generator</title>
+    <link rel="stylesheet" href="Styles.css">
+    <script src="script.js"></script>
+    
+</head>
+<body>
+    
+    <h1>Form to Text Prompt Generator</h1>
+    <hr>
+    
+    <input type = "checkbox" id="darkModeToggle">Toggle Dark Mode</input>
+
+    <form id="promptForm">
+        <table>
+            <tr>
+                <td>Topic/s:</td>
+                <td><input type="text" name="topic" required></td>
+            </tr>
+            <tr>
+                <td>Coverages:</td>
+                <td><input type="text" name="coverages" required></td>
+            </tr>
+            <tr>
+                <td>Difficulty:</td>
+                <td>
+                    <select name="difficulty" required>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                        <option value="Insane">Insane</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Number of Items:</td>
+                <td><input type="number" name="items" required min="1"></td>
+            </tr>
+            <tr>
+                <td>Test Styles (at least 2):</td>
+                <td>
+                    <b>Basic</b><br>
+                    <input type="checkbox" name="testStyles" value="Multiple Choice">Multiple Choice<br>
+                    <input type="checkbox" name="testStyles" value="Matching Type">Matching Type<br>
+                    <input type="checkbox" name="testStyles" value="Fill in the Blanks">Fill in the Blanks<br>
+                    <input type="checkbox" name="testStyles" value="Short Answer">Short Answer<br>
+                    <input type="checkbox" name="testStyles" value="True or False">True or False<br>
+                    <br>
+                    <b>Problem Solving</b><br>
+                    <input type="checkbox" name="testStyles" value="Problem Solving">Problem Solving<br>
+                    <input type="checkbox" name="testStyles" value="Daily Life Situations">Daily Life Situations<br>
+                    <input type="checkbox" name="testStyles" value="Conversion">Conversion<br>
+                    <br>
+                    <b>Programming</b><br> 
+                    <input type="checkbox" name="testStyles" value="Code Simulation">Code Simulation<br>
+                    <input type="checkbox" name="testStyles" value="Code Reading">Code Reading<br>
+                    <input type="checkbox" name="testStyles" value="Program Enhancement and Debugging">Program Enhancement and Debugging<br>
+                    <input type="checkbox" name="testStyles" value="Exercise/App or Program Building">Exercise/App or Program Building
+                </td>
+            </tr>
+            <tr>
+                <td>Conditions:</td>
+                <td><input type="text" name="conditions"></td>
+            </tr>
+
+            <tr>
+                <td>Desired Output (Optional paste):</td>
+                <td><input type="text" name="output"></td>
+            </tr>
+        </table>
+        <br>
+
+        <input type="button" value="Generate Prompt" onclick="generatePrompt()">
+    </form>
+
+    <p><b>OUTPUT:</b></p>
+    
+    <div id="output"></div>
+    <input type = "button" id="copyButton" value="Copy" onclick="copyOutput()">
+    
+    <script src="script.js"></script>
+</body>
+</html>
