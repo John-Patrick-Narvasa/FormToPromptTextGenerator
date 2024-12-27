@@ -39,7 +39,7 @@ Desired Output: ${desired_output}
 function copyOutput() {
     const outputText = document.getElementById('output').textContent;
     const errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = ''; // Clear previous error
+    errorMessage.textContent = '';
 
     if (outputText) {
         navigator.clipboard.writeText(outputText).then(() => {
