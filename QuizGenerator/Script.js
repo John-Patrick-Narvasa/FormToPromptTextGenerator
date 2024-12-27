@@ -24,8 +24,11 @@ Topic: ${topic}
 Coverages: ${coverages}
 Difficulty: ${difficulty}
 Number of Items: ${items}
+
 Test type/s: ${testStyles}
+
 Conditions: ${conditions}
+
 Desired Output: ${desired_output}
  
 
