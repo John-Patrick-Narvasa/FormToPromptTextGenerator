@@ -13,7 +13,8 @@
     <h1>Form to Text Prompt Generator</h1>
     <hr>
     
-    <input type = "checkbox" id="darkModeToggle">Toggle Dark Mode</input>
+    <input type = "checkbox" id="darkModeToggle">Toggle Dark Mode</input><br>
+    <button onclick="saveInputs()">Save Form Inputs?</button>
 
     <form id="promptForm">
         <table>
@@ -41,7 +42,7 @@
                 <td><input type="number" name="items" required min="1"></td>
             </tr>
             <tr>
-                <td>Test Styles (at least 2):</td>
+                <td>Test types (at least 2):</td>
                 <td>
                     <b>Basic</b><br>
                     <input type="checkbox" name="testStyles" value="Multiple Choice">Multiple Choice<br>
@@ -71,75 +72,91 @@
                 <td>Desired Output (Optional paste):</td>
                 <td><input type="text" name="output"></td>
             </tr>
+
+            <tr>
+                <td>Time Limit (in minutes):</td>
+                <td><input type="number" name="timeLimit" required min="1"></td>
+            </tr>
         </table>
         <br>
-
-        <input type="button" value="Generate Prompt" onclick="generatePrompt()">
+    
     </form>
+    
+    <input type="button" value="Generate Prompt" onclick="generatePrompt()">
 
     <p><b>OUTPUT:</b></p>
-    
     <div id="output"></div>
-    <!--  <input type = "button" id="copyButton" value="Copy" onclick="copyOutput()"> -->
-   
+
+    <button onclick="copyOutput(), setTimer()" >Copy text</button>
+
+    <h2 id="time"></h2>
     
     <script>
-      document.getElementById('darkModeToggle').addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-});
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+    });
 
-function generatePrompt() {
-    const form = document.getElementById('promptForm');
-    const topic = form.topic.value;
-    const coverages = form.coverages.value;
-    const difficulty = form.difficulty.value;
-    const items = form.items.value;
-    const testStyles = Array.from(form.testStyles).filter(el => el.checked).map(el => el.value).join(', ');
-    const conditions = form.conditions.value;
-    const desired_output = form.output.value;
-
-    if (testStyles.split(', ').length < 2) {
-        alert('Please select at least two test styles.');
-        return;
+    function saveInputs() {
+        
     }
 
-    const output = `
-Hello, I want you to follow the subject, coverage, and prompt mentioned below:
+    function generatePrompt() {
+        const form = document.getElementById('promptForm');
+        const topic = form.topic.value;
+        const coverages = form.coverages.value;
+        const difficulty = form.difficulty.value;
+        const items = form.items.value;
+        const testStyles = Array.from(form.testStyles).filter(el => el.checked).map(el => el.value).join(', ');
+        const conditions = form.conditions.value;
+        const desired_output = form.output.value;
+        const timeLimit = form.timeLimit.value;
 
-Topic: ${topic}
-Coverages: ${coverages}
-Difficulty: ${difficulty}
-Number of Items: ${items}
+        if (testStyles.split(', ').length < 2) {
+            alert('Please select at least two test types.');
+            return;
+        }
 
-Test type/s: ${testStyles}
+        const output = `
+    Hello, I want you to follow the subject, coverage, and prompt mentioned below:
 
-Conditions: ${conditions}
+    Topic: ${topic}
+    Coverages: ${coverages}
+    Difficulty: ${difficulty}
+    Number of Items: ${items}
 
-Desired Output: ${desired_output}
- 
+    Test type/s: ${testStyles}
 
-*If output too big for you to finish it, I will say to continue it*
-*Put the answers at the very bottom*
-    `.trim();
+    Conditions: ${conditions}
 
-    document.getElementById('output').textContent = output;
-}
+    Desired Output: ${desired_output}
+    
 
-function copyOutput() {
-    const outputText = document.getElementById('output').textContent;
-    const errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = '';
+    *If output too big for you to finish it, I will say to continue it*
+    *Put the answers at the very bottom*
+        `.trim();
 
-    if (outputText) {
-        navigator.clipboard.writeText(outputText).then(() => {
-            alert('Output copied to clipboard!');
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-        });
-    } else {
-        errorMessage.textContent = 'Nothing to copy!';
+        document.getElementById('output').textContent = output;
+        
     }
-}  
+
+    function copyOutput() {
+        var copyText = document.getElementById("output");
+
+        navigator.clipboard.writeText(copyText.textContent);
+
+        alert("Copied the text :) ");
+        setTime();
+    }
+
+        function setTimer() {
+            const minutes = form.timeLimit.value; 
+            const time = minutes * 1000;
+            const myTimeout = setTimeout(timeOut, time);
+        }
+
+        function timeOut() {
+            alert("TIME IS OUT!!!");
+        }
     </script>
 </body>
 </html>

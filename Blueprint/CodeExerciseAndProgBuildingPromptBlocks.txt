@@ -120,4 +120,3 @@ additional prompt...
 
 ## Conditions: 
 [With edge cases, codes that are challenging to read(poorly written code (variable names, arrangements, etc.)) ]
-
