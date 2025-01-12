@@ -70,3 +70,25 @@ function copyOutput() {
     // Alert the copied text
     alert("Copied the text: " + copyText.value);
   }
+
+  function setTimer() {
+    const startingMinutes = form.timeLimit.value;
+    let time = startingMinutes * 60;
+
+    const countdownEl = document.getElementById('timer');
+
+    setInterval(updateCountdown, 1000); 
+
+    function updateCountdown () {
+        const minutes = Math.floor(time/60);
+        let seconds = time % 60;
+        let milliseconds = time % 1000;
+
+        seconds = seconds < 10 ? `0${seconds}` : seconds;   
+
+        countdownEl.innerHTML = `${minutes}: ${seconds}`;
+        time--;
+        time = time < 0 ? 0 : time; 
+        }
+  }
+
