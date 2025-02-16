@@ -3,19 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <title>Play sound with JavaScript</title>
+    <title>Dynamic Soundboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #drop-zone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 400px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        #drop-zone.dragover {
+            background-color: #e0e0e0;
+        }
+        #soundboard {
+            margin-top: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #timer {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <button id="play">Play</button>
+    <h1>Dynamic Soundboard</h1>
+    <div id="drop-zone">
+        Drag and drop audio files here (WAV, MP3, OGG)
+    </div>
+
+    <div id="soundboard"></div>
+
+    <br>
+    <button id="pause">Pause</button>
+    <button id="stop">Stop</button>
+
+    <div id="timer">Time: 0:00</div>
 
     <script>
-        let play = document.getElementById("play");
-        function playAudio() {
-            let audio = new Audio("audio.mp3");
-            audio.play();
+        let currentAudio = null; // Store the currently playing audio
+        let timerInterval = null; // Store the interval for updating the timer
+
+        // Function to play audio
+        function playAudio(soundFile) {
+            if (currentAudio) {
+                currentAudio.pause(); // Stop the currently playing audio
+            }
+            currentAudio = new Audio(soundFile); // Create a new Audio object
+            currentAudio.play(); // Play the audio
+
+            // Start the timer
+            startTimer();
         }
-        play.addEventListener("click", playAudio);
+
+        // Function to pause audio
+        function pauseAudio() {
+            if (currentAudio) {
+                currentAudio.pause(); // Pause the audio
+                clearInterval(timerInterval); // Stop the timer
+            }
+        }
+
+        // Function to stop audio
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause(); // Pause the audio
+                currentAudio.currentTime = 0; // Reset audio to the beginning
+                clearInterval(timerInterval); // Stop the timer
+                updateTimerDisplay(0); // Reset the timer display
+            }
+        }
+
+        // Function to start the timer
+        function startTimer() {
+            clearInterval(timerInterval); // Clear any existing interval
+            timerInterval = setInterval(() => {
+                if (currentAudio) {
+                    updateTimerDisplay(currentAudio.currentTime); // Update the timer display
+                }
+            }, 100); // Update every 100ms
+        }
+
+        // Function to update the timer display
+        function updateTimerDisplay(timeInSeconds) {
+            const minutes = Math.floor(timeInSeconds / 60); // Calculate minutes
+            const seconds = Math.floor(timeInSeconds % 60); // Calculate seconds
+            const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`; // Format as MM:SS
+            document.getElementById("timer").textContent = `Time: ${formattedTime}`; // Update the display
+        }
+
+        // Drag-and-drop functionality
+        const dropZone = document.getElementById("drop-zone");
+        const soundboard = document.getElementById("soundboard");
+
+        // Prevent default drag behaviors
+        dropZone.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropZone.classList.add("dragover");
+        });
+
+        dropZone.addEventListener("dragleave", () => {
+            dropZone.classList.remove("dragover");
+        });
+
+        // Handle dropped files
+        dropZone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            dropZone.classList.remove("dragover");
+
+            const files = e.dataTransfer.files; // Get the dropped files
+            Array.from(files).forEach((file) => {
+                if (file.type.startsWith("audio/")) { // Check if the file is an audio file
+                    const fileURL = URL.createObjectURL(file); // Create a URL for the file
+                    createSoundButton(file.name, fileURL); // Create a button for the file
+                }
+            });
+        });
+
+        // Function to create a sound button
+        function createSoundButton(name, url) {
+            const button = document.createElement("button");
+            button.textContent = name;
+            button.addEventListener("click", () => playAudio(url));
+            soundboard.appendChild(button);
+        }
+
+        // Add event listener to the pause button
+        document.getElementById("pause").addEventListener("click", pauseAudio);
+
+        // Add event listener to the stop button
+        document.getElementById("stop").addEventListener("click", stopAudio);
     </script>
 </body>
 </html>
